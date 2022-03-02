@@ -1,0 +1,155 @@
+{% extends 'buttons.html'%}
+{%block title%} Form Creation {% endblock title%}
+{% block content%}
+<style>
+ .label{
+ width:200px;
+ margin-left:50px;
+ font-size:17px;
+ font-family:Sans-serif;
+ font-style:italic;
+ }
+ </style>
+<script type="text/javascript">
+    function btn_AddDatatoGrid(){
+       var LblName = document.getElementById('lbl_Name').value;
+       var FieldType = document.getElementById('Field_Type').value;
+       var FieldSequence = document.getElementById('txt_Sequence').value;
+       var table = document.getElementById("tbl_data_Form");
+       var totalRowCount = table.rows.length;
+       var row = table.insertRow(totalRowCount);
+       var srno = row.insertCell(0);
+       var label = row.insertCell(1);
+       var field = row.insertCell(2);
+       var seq   = row.insertCell(3);
+       var action = row.insertCell(4);
+
+       srno.innerHTML = row.rowIndex + '.' ;
+       label.innerHTML = LblName ;
+       field.innerHTML = FieldType;
+       seq.innerHTML = FieldSequence;
+       editbutton = document.createElement("a");
+       editbutton.href = '#';
+       editbutton.innerHTML = "<img src='/static/Img/edit.png'>";
+
+      var att = document.createAttribute("onclick");
+       att.value = "btn_Edit_ClickwithData(this);";
+       editbutton.setAttributeNode(att);
+
+
+       deletebutton = document.createElement("a");
+       deletebutton.href = '#' ;
+       deletebutton.innerHTML = "<img src='/static/Img/delete.png'>";
+       var atts = document.createAttribute("onclick");
+       atts.value = "btn_Delete_ClickwithData(this);";
+       deletebutton.setAttributeNode(atts);
+
+       action.appendChild(editbutton);
+       action.appendChild(deletebutton);
+
+       document.getElementById('lbl_Name').value ="";
+       document.getElementById('Field_Type').value ="-1";
+       document.getElementById('txt_Sequence').value ="";
+    }
+    function btn_Edit_ClickwithData(row){
+     //console.log("Row index is: " + document.getElementById("tbl_data_Form").rows[row.closest('tr').rowIndex]);
+       var Editrow = document.getElementById("tbl_data_Form").rows[row.closest('tr').rowIndex];
+       var LblName = document.getElementById('lbl_Name');
+       var FieldType = document.getElementById('Field_Type');
+       var FieldSequence = document.getElementById('txt_Sequence');
+       var table = document.getElementById("tbl_data_Form");
+
+       LblName.value =  table.rows[row].cells[1].innerHTML;
+
+    }
+    function btn_Delete_ClickwithData(row){
+        var Deleterow = parseInt(document.getElementById("tbl_data_Form").rows[row.closest('tr').rowIndex ]) +1;
+        document.getElementById("tbl_data_Form").deleteRow(Deleterow);
+    }
+</script>
+<div id="Add_Section">
+    <form id="Form_ID"  class="was-validated" action="/" method="post" >
+        {%csrf_token%}
+        <input type="hidden" id="Update_id" name="Update_id" value="{{Update_id}}">
+        <input type="hidden" id="Action" name="Action" value="Add">
+      <div class="form-row" style="margin-top:15;">
+        <div class="label">
+           Form Number
+        </div>
+        <div class="col">
+          <input type="text" name="Form_Number" class="form-control W-75"  required>
+        </div>
+         <div class="label">
+           Form Name
+        </div>
+        <div class="col">
+          <input type="text" name="Form_Name" class="form-control W-75"  required>
+        </div>
+      </div>
+        <div class="form-row" style="margin-top:15;">
+        <div class="label">
+           Label Name
+        </div>
+        <div class="col">
+          <input type="text" name="lbl_Name"  id="lbl_Name" class="form-control W-75"  required>
+        </div>
+         <div class="label">
+           Field Type
+        </div>
+        <div class="col">
+         <Select name="Field_Type" id="Field_Type" class="form-control W-75">
+              <Option value="-1">Please Select</Option>
+              <Option value="Textbox">Textbox</Option>
+              <Option value="Dropdown">Dropdown</Option>
+              <Option value="Radio">Radio</Option>
+         </Select>
+        </div>
+      </div>
+        <div class="form-row" style="margin-top:15;">
+            <div class="label" >
+               Sequence No.
+            </div>
+            <div class="col">
+                <input type="text" name="txt_Sequence"  id="txt_Sequence" class="form-control W-75"  required>
+            </div>
+            <div class="label" >
+                    <!--test-->
+            </div>
+            <div class="col">
+                <button type="button" id="btn_savetoGrid" onclick="btn_AddDatatoGrid()"> Save to Grid</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="div_formData">
+    <table  id="tbl_data_Form"  class="table table-striped table-hover" style="margin-top:300;">
+      <thead class="thead-dark">
+            <tr >
+                <th class="th-sm"  style="width:30" >
+                            S.No
+                </th>
+                <th class="th-sm">
+                           Label
+                </th>
+                <th class="th-sm">
+                            Field Type
+                </th>
+                <th class="th-sm">
+                           Sequence
+                </th>
+                <th class="th-sm" style="width:60">
+                            Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+
+<div id="data_view" hidden="true" >
+</div>
+{% endblock %}

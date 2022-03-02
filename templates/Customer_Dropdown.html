@@ -1,0 +1,9 @@
+{%if Customer_Data %}
+<select name="Customer_Name" id="Customer_Name" class="form-control W-75" >
+            <option value='-1' selected>Please Select</option>
+            {% for item in Customer_Data %}
+            <option value="{{item.Customer_ID}}"
+                {% if item.Customer_ID == get_Data_Bykey.Customer_Name %}selected="selected"{% endif %}>{{item.Customer_Name}}</option>
+            {% endfor %}
+    {%endif%}
+</select>

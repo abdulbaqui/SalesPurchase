@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: 'DB1'
+      #MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:9000
+    ports:
+      - 9000:9000
+    depends_on:
+      - db

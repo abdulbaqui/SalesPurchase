@@ -1,0 +1,186 @@
+{% extends 'base.html'%}
+{% block buttons%}
+<script type="text/javascript">
+  var flag='';
+
+   (function() {
+
+    window.addEventListener('load', function() {
+    var forms = document.getElementsByClassName('Form_ID');
+    var validation = Array.prototype.filter.call(forms, function(form) {
+    form.addEventListener('submit', function(event) {
+    if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+    }, false);
+    });
+    }, false);
+    })();
+
+    function Lock_Controls( act ){
+          var lockform = document.getElementById("Form_ID");
+          var lockelements = lockform.elements;
+          for (var i = 0, len = lockelements.length; i < len; ++i) {
+          if (act == 'lock'){
+            lockelements[i].readOnly = true;
+            }
+            else{
+                lockelements[i].readOnly = false;
+            }
+       } }
+       function  controls(){
+         Lock_Controls('lock');
+       }
+       window.onload = function() {
+            controls() ;
+            btn_Actions('{{Action}}');
+            if(location.search != ""){
+                document.querySelector('#data_view').hidden = false;
+                document.querySelector('#Add_Section').hidden = true;
+                document.querySelector('#btn_Edit').hidden = true ;
+                document.querySelector('#btn_Add').hidden = true;
+                document.querySelector('#btn_Edit').hidden = true ;
+                document.querySelector('#btn_Delete').hidden = true;
+                document.querySelector('#btn_Cancel').hidden = false;
+                document.querySelector('#btn_DownloadData').hidden = false;
+                }
+            };
+
+   function Submit(){
+         document.getElementById('Form_ID').submit();
+
+   }
+
+ function btn_Actions(flag){
+
+    var Add  = document.getElementById('btn_Add');
+    var Edit = document.getElementsByName('btn_Edit');
+    var Del  = document.getElementsByName('btn_Delete');
+
+   if (flag == 'Add'){
+     if(document.querySelector('#btn_Add').innerText  == 'Save'){
+         Submit();
+         document.querySelector('#Action').value = 'Add';
+     }
+     else{
+        document.querySelector('#btn_Add').innerText ='Save' ;
+        document.querySelector('#btn_Edit').hidden = true;
+        document.querySelector('#btn_Delete').hidden = true;
+        document.querySelector('#btn_Cancel').hidden = false;
+        document.querySelector('#Action').value = 'Save';
+        Lock_Controls('unlock');
+        flag = 'Save' ;
+        }
+   }
+   else if(flag == 'Edit'){
+       if(document.querySelector('#btn_Edit').innerText  == 'Update'){
+         Submit();
+         document.querySelector('#Action').value = 'Update';
+     }
+     else{
+        document.querySelector('#btn_Add').hidden = true;
+        document.querySelector('#btn_Delete').hidden = true;
+        document.querySelector('#btn_Edit').hidden = true;
+        document.querySelector('#btn_Cancel').hidden = false;
+        document.querySelector('#Add_Section').hidden =true;
+        document.querySelector('#data_view').hidden =false;
+        document.querySelector('#btn_DownloadData').hidden = false;
+        }
+   }
+   else if(flag == 'EdittoUpdate'){
+        document.querySelector('#btn_Edit').innerText ='Update' ;
+        document.querySelector('#btn_Add').hidden = true;
+        document.querySelector('#btn_Delete').hidden = true;
+        document.querySelector('#btn_Cancel').hidden = false;
+        Lock_Controls('unlock');
+        document.querySelector('#Action').value = 'Update';
+        flag = 'Update';
+   }
+   else if(flag == 'EdittoDelete'){
+        document.querySelector('#btn_Edit').hidden = true ;
+        document.querySelector('#btn_Add').hidden = true;
+        document.querySelector('#btn_Delete').hidden = false;
+        document.querySelector('#btn_Cancel').hidden = false;
+        Lock_Controls('unlock');
+        document.querySelector('#Action').value = 'Delete';
+        document.querySelector('#btn_Delete').innerText = 'Confirm Delete';
+        flag = 'Delete';
+   }
+
+   else if(flag == 'Update'){
+       document.querySelector('#Action').value='Update';
+       document.getElementById('Form_ID').submit();
+   }
+   else if(flag == 'Delete'){
+    if(document.querySelector('#btn_Delete').innerText  == 'Confirm Delete'){
+         Submit();
+         document.querySelector('#Action').value = 'Delete';
+     }
+     else{
+        document.querySelector('#btn_Delete').innerText = 'Confirm Delete';
+        document.querySelector('#btn_Add').hidden = true;
+        document.querySelector('#btn_Edit').hidden = true;
+        document.querySelector('#btn_Cancel').hidden = false;
+        document.querySelector('#Add_Section').hidden =true;
+        document.querySelector('#data_view').hidden =false;
+        document.querySelector('#btn_Delete').hidden = true;
+        document.querySelector('#FormMode').value = 'Delete';
+        document.querySelector('#ActionEdit').value ='Delete';
+     }
+   }
+   else if(flag == 'Cancel'){
+       document.querySelector('#btn_Delete').innerText = 'Delete';
+       document.querySelector('#btn_Add').innerText ='Add' ;
+        document.querySelector('#btn_Edit').innerText ='Edit' ;
+        document.querySelector('#btn_Add').hidden = false;
+        document.querySelector('#btn_Edit').hidden = false;
+        document.querySelector('#btn_Delete').hidden = false;
+        document.querySelector('#btn_Cancel').hidden = true;
+        document.querySelector('#data_view').hidden = true;
+        document.querySelector('#Add_Section').hidden =false;
+        document.querySelector('#Action').value = '';
+        Lock_Controls('lock');
+       if (document.querySelector('#Action').value != 'Save') {
+             Submit();
+        }
+        document.querySelector('#ActionEdit').value = '';
+   }
+
+ }
+function btn_ExportData(){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById('data_View1');
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    // Specify file name
+    var filename = filename?filename+'.xls':'excel_data.xls';
+
+    // Create download link element
+    downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        downloadLink.download = filename;
+        downloadLink.click();}
+ }
+</script>
+<div class="container-fluid"  id="div_buttons" style=" margin-top:0;padding-bottom:10px;padding-top:5px;background:#ACAAAA;">
+    <button type="button" id="btn_Add"  name="btn_Add"  class="btn btn-success" style="width:150px;"   onclick="btn_Actions('Add')">Add</button>
+    <button type="button" id="btn_Edit" name="btn_Edit"  class="btn btn-primary" style="width:150px;"  onclick="btn_Actions('Edit')">Edit</button>
+    <button type="button" id="btn_Delete" name="btn_Delete"  class="btn btn-danger" style="width:150px;" onclick="btn_Actions('Delete')">Delete</button>
+     <button type="button" id="btn_Cancel" name="btn_Cancel"  class="btn btn-light" style="width:150px;" onclick="btn_Actions('Cancel')" hidden ="true">Cancel</button>
+    <button type="button"  id="btn_DownloadData" name="btn_DownloadData" class="btn btn-info" hidden ="true" onclick="btn_ExportData()">Export to Excel</button>
+</div>
+{% endblock %}
+{% block content%}{% endblock %}
