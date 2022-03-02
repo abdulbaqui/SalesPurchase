@@ -1,6 +1,6 @@
-venv/
-docker-compose.yml
-Dockerfile
-app.yaml
-cloud_sql_proxy.exe
-.gcloudignore
+project1/SalesPurchase/venv/
+project1/SalesPurchase/docker-compose.yml
+project1/SalesPurchase/Dockerfile
+project1/SalesPurchase/app.yaml
+project1/SalesPurchase/cloud_sql_proxy.exe
+project1/SalesPurchase/.gcloudignore
