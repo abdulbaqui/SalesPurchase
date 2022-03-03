@@ -25,7 +25,7 @@ SECRET_KEY = 'x*2s5v+1*mfw3@k&_c%(s$)@-m*rs##gwo=ngbfsdfdxwj^xgn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['meta-garage-342111.ue.r.appspot.com','127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Registration.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '3306',
         'NAME': 'DB1',
         'USER': 'root',
