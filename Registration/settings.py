@@ -25,7 +25,7 @@ SECRET_KEY = 'x*2s5v+1*mfw3@k&_c%(s$)@-m*rs##gwo=ngbfsdfdxwj^xgn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['meta-garage-342111.ue.r.appspot.com','127.0.0.1']
 
 
 # Application definition

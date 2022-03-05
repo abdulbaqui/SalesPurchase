@@ -1,4 +1,3 @@
 venv/
-app.yaml
-cloud_sql_proxy.exe
-.gcloudignore
+docker-compose.yml
+Dockerfile
