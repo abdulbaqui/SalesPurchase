@@ -16,6 +16,12 @@ services:
     ports:
       - 9000:9000
     links:
+      - "db"
+    depends_on:
       - db
+  migration:
+    build: .
+    image: app
+    command: python manage.py migrate
     depends_on:
       - db
