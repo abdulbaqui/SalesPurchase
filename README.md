@@ -17,15 +17,15 @@ To install this project navigate to the directory "SalesPurchase"
 then follow the instructions below.
 
 Building a virtual environment:
-Creating virtual envirnment is necessary to avoid any unwanted issue
-that arise. More than that to avoid poluting local Python envirnment.
+Creating virtual enviornment is necessary to avoid any unwanted issue
+that arise. More than that to avoid poluting local Python environment.
 
 ```bash
   Python -m venv venv
 ```
 Here second venv is directory name where your environment would be created.
 You can name is what ever you want. Now you need to activate the virtual 
-envirnment. Activating virtual envirnemnet varies the type of 
+environment. Activating virtual environmnet varies the type of 
 operating system  you are using.
 
 Windows 
@@ -43,7 +43,7 @@ Your Output would be some what like this.
 ```
 Now as you have sucessfully activated your virtual environment lets move
 toward installing dependencies. Now run the following bash command in your activated
-envirnment this will install your project dependencies.
+environment this will install your project dependencies.
 
 Navigate to Registration directory
 ```bash
