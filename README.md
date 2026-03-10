@@ -9,12 +9,7 @@ Basic requirement for running this project is.
 
 ## Set Variables
 
-Rename the file name from .envrc.template to .envrc and provide the values for these listed variables. 
-MYSQL_HOSTPORT=
-MYSQL_INTERNALPORT=
-MYSQL_USER=
-MYSQL_PASSWORD=
-MYSQL_DATABASE=
+Rename the file name from .envrc.template to .envrc and provide the values for these variables. MYSQL_HOSTPORT, MYSQL_INTERNALPORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
 
 Now execute
 ```bash
