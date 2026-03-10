@@ -1,27 +1,33 @@
-version: '3'
-
 services:
   db:
     image: mysql:latest
     ports:
-      - "3305:3305"
-    expose:
-      - 3306
+      - "3305:3306"
     environment:
+      MYSQL_ROOT_USER: 'root'
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: 'DB1'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s       # ← check every 10 seconds
+      timeout: 5s         # ← wait 5 seconds for response
+      retries: 5          # ← retry 5 times before failing
+      start_period: 30s   # ← give MySQL 30 seconds to start
   web:
+    image: web:latest
     build: .
-    command: python manage.py runserver 0.0.0.0:9000
+    command: >
+      sh -c "python3 manage.py makemigrations &&
+             python3 manage.py migrate &&
+             python3 manage.py runserver 0.0.0.0:9000"
     ports:
       - 9000:9000
     links:
       - "db"
     depends_on:
-      - db
-  migration:
-    build: .
-    image: app
-    command: python manage.py migrate
-    depends_on:
-      - db
+      db:
+        condition: service_healthy 
+volumes:
+  mysql_data:
