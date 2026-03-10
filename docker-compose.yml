@@ -2,11 +2,11 @@ services:
   db:
     image: mysql:latest
     ports:
-      - "3305:3306"
+      - "${MYSQL_HOSTPORT}:${MYSQL_INTERNALPORT}"
     environment:
-      MYSQL_ROOT_USER: 'root'
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'DB1'
+      MYSQL_ROOT_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:

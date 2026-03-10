@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'Registration.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'db-1',
-        'PORT': '3306',
-        'NAME': 'DB1',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'HOST': os.environ.get('MYSQL_HOST', 'db'),
+        'PORT': os.environ.get('MYSQL_HOSTPORT', '3306'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'DB1'),
+        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'root'),
     }
 }
 
